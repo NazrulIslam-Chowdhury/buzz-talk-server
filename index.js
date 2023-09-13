@@ -9,6 +9,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const path = require("path");
 const { fileURLToPath } = require("url");
+const register = require("./controllers/auth.js");
 
 require("dotenv").config();
 
@@ -33,6 +34,9 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
+// routes with files
+app.post("/auth/register", upload.single("picture"), register);
+
 // mongoose setup
 const PORT = process.env.PORT || 5000;
 mongoose.connect(process.env.MONGODB_URL, {
@@ -40,4 +44,4 @@ mongoose.connect(process.env.MONGODB_URL, {
     useUnifiedTopology: true,
 }).then(() => {
     app.listen(PORT, () => console.log(`Server is running on port:${PORT}`));
-}).catch((error) => console.log(`${error} did not connect`))
+}).catch((error) => console.log(`${error} did not connect`));
