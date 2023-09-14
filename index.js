@@ -15,6 +15,10 @@ const postRoutes = require("./routes/posts.js");
 const verifyToken = require("./middleware/auth.js");
 const register = require("./controllers/auth.js");
 const createPost = require("./controllers/posts.js");
+const User = require("./models/User.js");
+const Post = require("./models/Posts.js");
+const users = require('./data/index.js');
+const posts = require('./data/index.js');
 
 require("dotenv").config();
 
@@ -55,4 +59,8 @@ mongoose.connect(process.env.MONGODB_URL, {
     useUnifiedTopology: true,
 }).then(() => {
     app.listen(PORT, () => console.log(`Server is running on port:${PORT}`));
+
+    // data
+    // User.insertMany(users);
+    // Post.insertMany(posts);
 }).catch((error) => console.log(`${error} did not connect`));
